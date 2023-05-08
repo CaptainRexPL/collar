@@ -1,7 +1,9 @@
 package com.collarmc.client.api.identity;
 
 import com.collarmc.api.identity.ClientIdentity;
+import com.collarmc.api.minecraft.MinecraftPlayer;
 import com.collarmc.api.profiles.PublicProfile;
+import com.collarmc.api.security.TokenGenerator;
 import com.collarmc.api.session.Player;
 import com.collarmc.client.Collar;
 import com.collarmc.client.api.AbstractApi;
@@ -12,8 +14,6 @@ import com.collarmc.protocol.identity.GetIdentityRequest;
 import com.collarmc.protocol.identity.GetIdentityResponse;
 import com.collarmc.protocol.identity.GetProfileRequest;
 import com.collarmc.protocol.identity.GetProfileResponse;
-import com.collarmc.api.security.TokenGenerator;
-import com.collarmc.api.minecraft.MinecraftPlayer;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.stoyanr.evictor.ConcurrentMapWithTimedEviction;

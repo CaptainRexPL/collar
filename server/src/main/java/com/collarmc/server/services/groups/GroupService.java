@@ -3,7 +3,6 @@ package com.collarmc.server.services.groups;
 import com.collarmc.api.friends.Status;
 import com.collarmc.api.groups.*;
 import com.collarmc.api.groups.http.*;
-import com.collarmc.api.http.HttpException;
 import com.collarmc.api.http.HttpException.BadRequestException;
 import com.collarmc.api.http.HttpException.ForbiddenException;
 import com.collarmc.api.http.HttpException.NotFoundException;
