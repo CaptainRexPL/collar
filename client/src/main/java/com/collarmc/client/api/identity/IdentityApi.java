@@ -106,13 +106,13 @@ public class IdentityApi extends AbstractApi {
     public CompletableFuture<Optional<PublicProfile>> resolveProfile(Player player) {
         Optional<PublicProfile> profile = profileCache.asMap().getOrDefault(player.identity.id(), Optional.empty());
         if (profile.isPresent()) {
-            LOGGER.debug("Profile resolved from cache, player identity id: " + player.identity.id());
+            LOGGER.info("Profile resolved from cache, player identity id: " + player.identity.id());
             return CompletableFuture.completedFuture(profile);
         } else {
             CompletableFuture<Optional<PublicProfile>> future = new CompletableFuture<>();
             profileFutures.put(player.identity.id(), future);
             sender.accept(new GetProfileRequest(player.identity.id()));
-            LOGGER.debug("Profile resolved from request, player identity id: " + player.identity.id());
+            LOGGER.info("Profile resolved from request, player identity id: " + player.identity.id());
             return future;
         }
     }
