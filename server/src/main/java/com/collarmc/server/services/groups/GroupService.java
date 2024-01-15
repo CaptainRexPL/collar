@@ -160,7 +160,11 @@ public final class GroupService {
         BatchProtocolResponse response = new BatchProtocolResponse();
         store.findGroupsContaining(player.identity.id()).forEach(group -> {
             PublicProfile profile = profiles.getById(player.identity.id()).orElseThrow(() -> new IllegalStateException("could not load profile " + player.identity.id())).toPublic();
-            group = group.updatePlayer(new MemberSource(player, profile));
+            if (group.type == GroupType.NEARBY) {
+                group = group.removeMember(player);
+            } else {
+                group = group.updatePlayer(new MemberSource(player, profile));
+            }
             // Let everyone else in the group know that this identity has gone offline
             Group finalGroup = group;
             BatchProtocolResponse updates = createMemberMessages(
@@ -341,6 +345,7 @@ public final class GroupService {
                 group = group.removeMember(source.player);
             }
             store.delete(group.id);
+            LOGGER.info("[GroupService] deleted " + group.type + " group: " + group.id);
         }));
         return response.optional();
     }
@@ -414,7 +419,7 @@ public final class GroupService {
     }
 
     private void updateState(Group group) {
-        if (group != null && group.members.isEmpty()) {
+        if (group != null && (group.members.isEmpty() || (group.type == GroupType.NEARBY && group.members.size() == 1))) {
             LOGGER.info("Removed group " + group.id + " as it has no members.");
             store.delete(group.id);
         }
